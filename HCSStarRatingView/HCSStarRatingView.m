@@ -113,8 +113,13 @@
 
 - (void)setValue:(CGFloat)value sendValueChangedAction:(BOOL)sendAction {
     [self willChangeValueForKey:NSStringFromSelector(@selector(value))];
-    if (_value != value && value >= _minimumValue && value <= _maximumValue) {
-        _value = value;
+    if (value >= _minimumValue && value <= _maximumValue) {
+        if (_value != value) {
+            _value = value;
+        } else {
+            _value = 0;
+        }
+
         if (sendAction) [self sendActionsForControlEvents:UIControlEventValueChanged];
         [self setNeedsDisplay];
     }
